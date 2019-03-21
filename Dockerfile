@@ -1,5 +1,4 @@
-FROM georgy/openjdk:8u191-jdk as BUILDER
-#FROM docker.io/georgy/maven:latest AS BUILDER
+FROM georgy/maven:latest AS BUILDER
 
 WORKDIR /opt/indy
 
@@ -10,8 +9,7 @@ RUN mvn clean -DskipTests=true install && \
     tar -xvf indy-launcher-1.7.4-SNAPSHOT-complete.tar.gz
 
 
-#FROM node:8
-FROM mhart/alpine-node:8
+FROM georgy/node8:latest
 
 COPY --from=BUILDER /opt/indy/deployments/launcher/target/indy /opt/indy.ui/indy
 
